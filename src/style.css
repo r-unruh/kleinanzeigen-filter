@@ -6,18 +6,23 @@
   display: none;
 }
 
+/* The menu controls reuse the site's own Tailwind classes (see templates.html).
+   Only these feature-specific bits, which the site has no equivalent for, need
+   custom CSS. The fold button gets its colours from page classes; this only
+   positions/sizes it as a corner overlay. */
 .vimuser-fold-button {
   position: absolute;
   bottom: 0;
-  z-index: 10;
   right: 0;
+  z-index: 10;
 
-  font-size: .8em;
+  border: none;
   border-radius: 0;
   height: 20px;
   min-height: 0;
   line-height: 1em;
   padding: 0px 4px;
+  font-size: .8em;
 }
 
 .vimuser-stub, .vimuser-stub:hover, .vimuser-stub:active {

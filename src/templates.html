@@ -1,30 +1,32 @@
 <template id="vimuser-sidebar-menu">
-  <section>
+  <!-- Mirrors the site's own filter sections (classes copied from them) so it
+       sits inside the filter card identically to "Kategorien", "Preis", … -->
+  <section class="vimuser-menu mt-small border-t border-utilityNonessential pt-small">
     <header>
-      <h2 class="sectionheadline">Filter</h2>
+      <h3 class="font-strong">Filter</h3>
     </header>
-    <div class="browsebox-section-body">
-      <ul class="treelist browsebox-itemlist is-root">
-        <li>
-          <a class="text-link-subdued"
-            href="https://chromewebstore.google.com/detail/kleinanzeigende-filter/bekmapfnlkhaeopdmhglkanoobnglbhf">
-            Über den Filter
-          </a>
-        <li>
-        </ul>
-    </div>
-    <div class="browsebox-section-body">
-      <form action="">
-        <textarea style="width: 100%" rows="10"
-          placeholder="Suchbegriffe zum Rausfiltern hier eintragen.
+    <div class="mt-medium">
+      <textarea rows="10"
+        class="box-border w-full rounded-medium border border-solid border-utility bg-surface p-small text-bodyRegular focus:outline-none"
+        placeholder="Suchbegriffe zum Rausfiltern hier eintragen.
 
 Beispiele:
 porzellan
 kinderschuhe
 bücher"
-        ></textarea>
-        <button class="button-small">Speichern</button>
-      </form>
+      ></textarea>
+      <div class="mt-small">
+        <button type="button"
+          class="vimuser-menu-button inline-flex h-xlarge cursor-pointer items-center rounded-full bg-interactive px-medium font-strong text-onInteractive hover:bg-interactiveContainer">
+          Speichern
+        </button>
+      </div>
+      <div class="mt-small">
+        <a class="text-secondary underline hover:no-underline"
+          href="https://chromewebstore.google.com/detail/kleinanzeigende-filter/bekmapfnlkhaeopdmhglkanoobnglbhf">
+          Über den Filter
+        </a>
+      </div>
     </div>
   </section>
 </template>
@@ -34,7 +36,8 @@ bücher"
 </template>
 
 <template id="vimuser-fold-button">
-  <button type="button" class="vimuser-fold-button">
+  <button type="button"
+    class="vimuser-fold-button bg-interactive text-onInteractive hover:bg-interactiveContainer cursor-pointer font-strong">
     Ausblenden
   </button>
 </template>
