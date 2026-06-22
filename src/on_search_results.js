@@ -20,9 +20,9 @@ async function main() {
   if (filterCard) {
     new SidebarMenu(filterCard);
   } else {
-    console.warn(
-      "Kleinanzeigen Filter: filter card (#browsebox-form) not found; " +
-      "skipping the filter menu. Ad filtering still active.");
+    // No sidebar to dock into (different layout/viewport); fall back to a
+    // floating panel so the filter list is still editable.
+    new SidebarMenu(document.body, {floating: true});
   }
 
   // Setup ad components.

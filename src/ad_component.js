@@ -83,12 +83,13 @@ class AdComponent {
   }
 }
 
-// Organic ads always show a posting date ("Heute, 11:56" / "Gestern, 09:38" /
-// "12.06.2026"); promoted "Top-Anzeigen" omit it. So an ad with no visible date
-// is a promoted one.
-const POSTING_DATE = /(?:Heute|Gestern),\s*\d{1,2}:\d{2}|\b\d{1,2}\.\d{1,2}\.\d{2,4}\b/;
+// Promoted "Top-Anzeigen" carry a "TOP" badge. It renders as a text node in
+// some categories and as an SVG glyph (no text) in others, so check both.
+const TOP_GLYPH_PATH = "M8.168 13H9.62"; // start of the path that draws "TOP"
 function isPromotedAd(item) {
-  return !POSTING_DATE.test(item.innerText);
+  const textBadge = [...item.querySelectorAll("*")].some(
+    el => el.childElementCount === 0 && el.textContent.trim() === "TOP");
+  return textBadge || !!item.querySelector(`path[d^="${TOP_GLYPH_PATH}"]`);
 }
 
 function strikeText(text, badWords) {

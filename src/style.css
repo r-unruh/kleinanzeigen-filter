@@ -25,6 +25,49 @@
   font-size: .8em;
 }
 
+/* Fallback menu, used when no filter sidebar exists to dock into. Pinned to the
+   corner and collapsed by default so it doesn't obstruct results. */
+.vimuser-floating {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2147483647;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
+}
+
+.vimuser-floating-toggle {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-weight: bold;
+  color: inherit;
+}
+
+.vimuser-floating-toggle::before {
+  content: "\25BE  "; /* ▾ */
+}
+
+.vimuser-floating-collapsed {
+  width: auto;
+  padding: 8px 14px;
+}
+
+.vimuser-floating-collapsed .vimuser-floating-toggle::before {
+  content: "\25B8  "; /* ▸ */
+}
+
+.vimuser-floating-collapsed .vimuser-menu {
+  display: none;
+}
+
 .vimuser-stub, .vimuser-stub:hover, .vimuser-stub:active {
   min-height: 0;
   height: auto;
