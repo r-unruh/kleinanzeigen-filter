@@ -5,42 +5,32 @@ const FILTERS = {
 };
 const ADS = [];
 
-async function loadFromStorage(key, area = chrome.storage.sync) {
-  return new Promise(resolve => {
-    area.get(key, result => {
-      resolve(result[key]);
-    });
-  });
-}
-
-async function saveToStorage(key, value, area = chrome.storage.sync) {
-  return new Promise(resolve => {
-    area.set({[key]: value}, resolve);
-  });
-}
-
 async function loadFilters() {
-  FILTERS.words = new Set(await loadFromStorage('badWords') ?? []);
+  const {badWords} = await chrome.storage.sync.get('badWords');
+  FILTERS.words = new Set(badWords ?? []);
 
   // Ids live in local storage; sync storage items are too small for them.
-  let ids = await loadFromStorage('ids', chrome.storage.local);
+  let {ids} = await chrome.storage.local.get('ids');
   if (ids === undefined) {
     // One-time migration; earlier versions kept ids in sync storage
-    ids = await loadFromStorage('ids') ?? [];
-    await saveToStorage('ids', ids, chrome.storage.local);
+    ids = (await chrome.storage.sync.get('ids')).ids ?? [];
+    await chrome.storage.local.set({ids});
     chrome.storage.sync.remove('ids');
   }
   FILTERS.ids = new Set(ids);
 }
 
-async function saveFilters() {
+async function saveIds() {
   // Limit max number of ids, evicting oldest first
   while (FILTERS.ids.size > 10000) {
     FILTERS.ids.delete(FILTERS.ids.values().next().value);
   }
 
-  await saveToStorage('ids', [...FILTERS.ids], chrome.storage.local);
-  await saveToStorage('badWords', [...FILTERS.words]);
+  await chrome.storage.local.set({ids: [...FILTERS.ids]});
+}
+
+async function saveWords() {
+  await chrome.storage.sync.set({badWords: [...FILTERS.words]});
 }
 
 function applyFilters() {

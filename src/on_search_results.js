@@ -33,6 +33,9 @@ async function main() {
   // Setup ad components.
   // Each ad is an <article data-adid> wrapped in an <li>; the data-adid
   // attribute is what marks a genuine user ad (vs. injected banners).
+  // Results also render client-side, so wait for the first card (pages with
+  // no results just hit the timeout and continue with an empty list).
+  await waitForElement("article[data-adid]");
   const elements = [...document.querySelectorAll("article[data-adid]")]
     .map(a => a.closest("li") ?? a.parentElement)
     .filter(Boolean);

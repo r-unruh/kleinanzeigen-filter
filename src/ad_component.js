@@ -26,7 +26,7 @@ class AdComponent {
       e.stopPropagation();
       FILTERS.ids.add(this.id);
       this.fold();
-      await saveFilters();
+      await saveIds();
     });
 
     // Add stub
@@ -40,7 +40,7 @@ class AdComponent {
       e.stopPropagation();
       FILTERS.ids.delete(this.id);
       this.unfold();
-      await saveFilters();
+      await saveIds();
     });
   }
 

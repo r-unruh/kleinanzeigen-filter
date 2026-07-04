@@ -49,9 +49,9 @@ class SidebarMenu {
 
   async save() {
     this.textarea.value = this.textarea.value.toLowerCase();
-    FILTERS.words =
-      new Set(this.textarea.value.split("\n").filter(w => w !== ""));
+    FILTERS.words = new Set(
+      this.textarea.value.split("\n").map(w => w.trim()).filter(Boolean));
     applyFilters();
-    await saveFilters();
+    await saveWords();
   }
 }
