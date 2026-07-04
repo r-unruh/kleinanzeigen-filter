@@ -5,8 +5,12 @@ class AdComponent {
 
     // Get ad data (read before we mutate the card below)
     this.id = article.getAttribute("data-adid");
-    this.title = (e.querySelector("h3 a") ?? e.querySelector("h3"))
-      ?.innerText.trim() ?? "";
+    // The site is A/B tested: the "classic" layout puts the title in an <h2>,
+    // the redesign puts it in an <h3>. Support both so filtering works on either.
+    this.title = (
+      e.querySelector("h2 a") ?? e.querySelector("h2") ??
+      e.querySelector("h3 a") ?? e.querySelector("h3")
+    )?.innerText.trim() ?? "";
     this.user = e.querySelector('a[href^="/pro/"] span')?.innerText.trim() ?? "";
     this.isPromoted = isPromotedAd(e);
 
