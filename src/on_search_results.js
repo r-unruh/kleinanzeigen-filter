@@ -11,12 +11,10 @@ async function main() {
   // The sidebar renders client-side, so it may not exist yet at document_idle;
   // wait for it, and never let a missing sidebar abort the rest of the setup
   // (ad filtering is the core feature).
-  // The site is A/B tested with two different sidebar markups: the redesign uses
-  // #browsebox-form, the classic layout uses #browsebox-searchform. Accept both.
+  // The site A/B-tests two sidebar layouts; accept either form.
   const sidebarForm = await waitForElement("#browsebox-form, #browsebox-searchform");
-  // Dock our menu next to the site's own filter sections. In the redesign these
-  // sit inside one rounded "bg-surface" card; in the classic layout they live in
-  // a ".contentbox". Try both, then fall back to the surrounding <aside>.
+  // Dock our menu into the card holding the site's own filter sections (each
+  // layout marks it differently), or fall back to the surrounding <aside>.
   const filterCard = sidebarForm
     ?.querySelector("h3.font-strong")
     ?.closest('[class*="bg-surface"]')
