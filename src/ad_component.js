@@ -68,7 +68,7 @@ class AdComponent {
     }
 
     // Add strikethrough
-    this.stubElement.innerHTML = strikeText(this.title, [...FILTERS.words]);
+    strikeText(this.stubElement, this.title, [...FILTERS.words]);
 
     if (!fold) {
       this.unfold();
@@ -95,8 +95,22 @@ function isPromotedAd(item) {
   return textBadge || !!item.querySelector(`path[d^="${TOP_GLYPH_PATH}"]`);
 }
 
-function strikeText(text, badWords) {
-    const escaped = badWords.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-    const regex = new RegExp(`(${escaped.join('|')})`, 'gi');
-    return text.replace(regex, "<s>$1</s>");
+// Write `text` into `element` with occurrences of `badWords` struck through.
+// Built from DOM nodes so the title is never parsed as HTML.
+function strikeText(element, text, badWords) {
+  if (badWords.length === 0) {
+    element.replaceChildren(text);
+    return;
+  }
+  const escaped = badWords.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const regex = new RegExp(`(${escaped.join('|')})`, 'gi');
+  // The capture group makes split() keep the matches, at odd indices
+  element.replaceChildren(...text.split(regex).map((part, i) => {
+    if (i % 2 === 0) {
+      return part;
+    }
+    const s = document.createElement('s');
+    s.textContent = part;
+    return s;
+  }));
 }
