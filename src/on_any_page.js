@@ -13,6 +13,7 @@ const badChildren = [
   `[data-liberty-position-name$="-top"]`,
   `[data-liberty-position-name$="-top-banner"]`,
   `[data-liberty-position-name*="-result-list-"]`,
+  `[data-liberty-position-name*="-sky-"]`,
 ];
 
 function removeAds() {

@@ -16,8 +16,11 @@ async function main() {
   // Dock our menu into the card holding the site's own filter sections (each
   // layout marks it differently), or fall back to the surrounding <aside>.
   const filterCard = sidebarForm
-    ?.querySelector("h3.font-strong")
-    ?.closest('[class*="bg-surface"]')
+    ?.querySelector("details[data-filter-section]")
+    ?.parentElement
+    ?? sidebarForm
+      ?.querySelector("h3.font-strong")
+      ?.closest('[class*="bg-surface"]')
     ?? sidebarForm
       ?.querySelector("h3.sectionheadline")
       ?.closest(".contentbox")
